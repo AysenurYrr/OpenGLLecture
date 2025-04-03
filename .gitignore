@@ -1,3 +1,7 @@
 
 # ignore directories name starts with build
 build*/
+KHR/
+glad/
+glm-0.9.9.0/
+
