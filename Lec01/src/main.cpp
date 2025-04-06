@@ -8,6 +8,10 @@
 
 #include "kutuphane.hpp"
 
+// Programı biz işlemcide derlemeyeceğimiz için
+// Program ekran kartına yollanacağı için 
+// Ekran kartına karakter dizisi olarak yollanacaktır
+
 //vertex shader kaynak kodu
 char* vssource =
 "#version 330 core\n						\
@@ -59,10 +63,11 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	//Program nesnesi oluşturma
+	//Program nesnesi oluşturma ve program nesnesinin ID'sini bize döndürür.
 	programId = glCreateProgram();
 	// Bir program nesnesi oluşturduk. Bunu içerisi şuan boş. Buna vertex ve program shader göndereceğim.
 
+	//Öncelikle vertex
 	unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 
 	glShaderSource(vertexShaderId, 1, &vssource, NULL);
@@ -75,8 +80,8 @@ int main(int argc, char** argv)
 
 	glShaderSource(vertexFragmentId, 1, &fssource, NULL);
 
+	//Fragment shader oluşturuldu ve Ekran kartına bunu derlemesini söyledik
 	glCompileShader(vertexFragmentId);
-	//Fragment shader oluşturuldu ve Ekran kartına bunu derlemesini söyledik.
 
 	//İki shader nesnem oluşturuldu ve derlendi. Şimdi bunları program nesneme yükleyeceğim.
 	glAttachShader(programId, vertexShaderId);
@@ -85,18 +90,52 @@ int main(int argc, char** argv)
 
 	glLinkProgram(programId);
 
-	// Opengl vertex  bilgilerini direk dire bir dizi içerisinde tutamıyor. 
-	// Vertex Buffer Object denen nesneler içerinde barındırıyor bu nesneleri
+	/* 
+	Opengl vertex  bilgilerini direk dire bir dizi içerisinde tutamıyor. 
+	Vertex Buffer Object denen nesneler içerinde barındırıyor bu nesneleri
+	*/
 	unsigned int VBO; //Vertex Buffer Object
+	unsigned int VAO;
 
-	//İlk parametre kaç buffer oluşturulacak, diğer parametre 
+	/*
+	Bu fonksiyon buffer oluşturmak için kullanılmaktadır.
+	İlk parametre kaç buffer oluşturulacak, diğer parametre
+	*/ 
+	glGenBuffers(1, &VAO);
 	glGenBuffers(1, &VBO); //VBO oluşturuldu
 
-	// Pencere kapatılana kadar devam eden döngü.
-	// glfwWindowShouldClose pencerenin kapatılıp kapatılmadığını kontrol eder.
-	// Eğer pencere kapatılmışsa 0 döndürür.
-	// Bu yüzden pencere kapatılmadığı sürece döngü devam eder.
+	glGenVertexArrays(1,&VAO);
+	/*
+	OpenGl aktif olan bufferda işlem yapıyor. Buffer'ı aktif etmiyor.
+	Dolayısı ile Buffer öncelikle aktif edilmelidir.
+	glBindBuffer: Aktif edilecek Buffer türü, Aktif edlecek Buffer ID'si
+	*/
+
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),vertices,GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3*sizeof(float),(void*)0);
+
+	glEnableVertexAttribArray(0);
+
+	/* 
+	Pencere kapatılana kadar devam eden döngü.
+	glfwWindowShouldClose pencerenin kapatılıp kapatılmadığını kontrol eder.
+	Eğer pencere kapatılmışsa 0 döndürür.
+	Bu yüzden pencere kapatılmadığı sürece döngü devam eder.
+	*/
 	while(glfwWindowShouldClose(window) == 0){
+		glClearColor(0.0f,0.4f,0.7f,1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(programId); //Programı kullanmaya başla
+
+		glBindVertexArray(VAO); //Vertex Array Object'i kullanmaya başla
+		glEnableVertexAttribArray(0); //Vertex Array Object'i kullanmaya başla
+		glDrawArrays(GL_TRIANGLES, 0, 3); //Üçgen çiz
+
 		// Pencereyi güncelle
 		glfwSwapBuffers(window);
 		// Olayları kontrol et. Kullanıcıdan gelen inputları al fare tıklanması gibi
