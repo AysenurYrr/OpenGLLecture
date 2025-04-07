@@ -11,15 +11,15 @@
 
 
 float vertices[] = {
-    // Yakın üçgen (z = -0.5f) — kırmızı
-    -0.5f, -0.5f, -1.5f,  // Sol alt
-     0.5f, -0.5f, -1.5f,  // Sağ alt
-     0.0f,  0.5f, -1.5f,  // Üst
-
-    // Uzak üçgen (z = -1.5f) — yeşil
+    // Yakın üçgen (z = -1.5f) — yeşil
     -0.3f, -0.3f, -0.5f,  // Sol alt
      0.3f, -0.3f, -0.5f,  // Sağ alt
-     0.0f,  0.3f, -0.5f   // Üst
+     0.0f,  0.3f, -0.5f,  // Üst
+
+    // Uzak üçgen (z = -0.5f) — kırmızı
+    -0.5f, -0.5f, -1.5f,  // Sol alt
+     0.5f, -0.5f, -1.5f,  // Sağ alt
+     0.0f,  0.5f, -1.5f   // Üst
 };
 
 
@@ -96,13 +96,14 @@ int main(int argc,char** argv)
         glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, glm::value_ptr(mvp));
         glBindVertexArray(VAO);
 
-        // Kırmızı yakın üçgen
-        glUniform4f(glGetUniformLocation(program.getId(), "uColor"), 1.0f, 0.0f, 0.0f, 1.0f);
+        // Yeşil yakın üçgen
+        glUniform4f(glGetUniformLocation(program.getId(), "uColor"), 0.0f, 1.0f, 0.0f, 1.0f);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        // Yeşil uzak üçgen
-        glUniform4f(glGetUniformLocation(program.getId(), "uColor"), 0.0f, 1.0f, 0.0f, 1.0f);
-        glDrawArrays(GL_TRIANGLES, 3, 6);
+        // Kırmızı uzak üçgen
+        glUniform4f(glGetUniformLocation(program.getId(), "uColor"), 1.0f, 0.0f, 0.0f, 1.0f);
+        glDrawArrays(GL_TRIANGLES, 3, 3);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
