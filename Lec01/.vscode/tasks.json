@@ -10,7 +10,7 @@
             "type": "shell",
             "command": "cmake",
             "options": {
-                "cwd": "${workspaceFolder}/../buildLec01"
+                "cwd": "${workspaceFolder}/build"
             },
             "args": [
                 "${workspaceFolder}"
@@ -28,16 +28,16 @@
             "type": "shell",
             "command": "mkdir",
             "options": {
-                "cwd": "${workspaceFolder}/../"
+                "cwd": "${workspaceFolder}/"
             },
-            "args": ["-p","buildLec01"]
+            "args": ["-p","build"]
         },
         {
             "label": "Make",
             "type": "shell",
             "command": "make",
             "options": {
-                "cwd": "${workspaceFolder}/../buildLec01"
+                "cwd": "${workspaceFolder}/build"
             },
             "args": [
                 "-l"

@@ -14,10 +14,14 @@ public:
     void link();
 
     void use();
+
+    unsigned int getId() const;
 private:
-    std::string getShaderFromFile(const char* fileName);
     unsigned int m_ProgramId;
+
+    std::string getShaderFromFile(const char* fileName);
   
 };
+
 
 #endif

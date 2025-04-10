@@ -8,7 +8,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/../buildLec01/OpenGLLec01",
+        "program": "${workspaceFolder}/build/OpenGLLec01",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",

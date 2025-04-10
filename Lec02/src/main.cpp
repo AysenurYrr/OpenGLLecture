@@ -8,13 +8,12 @@
 
 //noktalara ait koordinat bilgileri.
 float vertices[] = {
-    -0.6f, -0.6f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+    -0.6f, -0.6f, 0.0f, // Sol alt
+     0.6f, -0.6f, 0.0f, // Sağ alt
+     0.0f,  0.7f, 0.0f  // Üst
 }; 
 
 //OpenGL nesnelerinin id değerlerini tutacak olan değişkenler
-
 unsigned int VBO;
 unsigned int VAO;
 
@@ -43,7 +42,7 @@ int main(int argc,char** argv)
 	}
 
     ShaderProgram program;
-
+    // Shader programları dosyaya taşındı. 
     program.attachShader("../shaders/simplevs.glsl",GL_VERTEX_SHADER);
     program.attachShader("../shaders/simplefs.glsl",GL_FRAGMENT_SHADER);
     program.link();

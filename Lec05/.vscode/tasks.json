@@ -10,7 +10,7 @@
             "type": "shell",
             "command": "cmake",
             "options": {
-                "cwd": "${workspaceFolder}/../build"
+                "cwd": "${workspaceFolder}/build"
             },
             "args": [
                 "${workspaceFolder}"
@@ -28,7 +28,7 @@
             "type": "shell",
             "command": "mkdir",
             "options": {
-                "cwd": "${workspaceFolder}/../"
+                "cwd": "${workspaceFolder}/"
             },
             "args": [
                 "-p",
@@ -41,7 +41,7 @@
             "type": "shell",
             "command": "make",
             "options": {
-                "cwd": "${workspaceFolder}/../build"
+                "cwd": "${workspaceFolder}/build"
             },
             "args": [
                 "-l"
